@@ -24,6 +24,7 @@ static unsigned int getButtonsDown(unsigned int padscore_handle, unsigned int vp
 #define FORCE_HBL (VPAD_BUTTON_A | VPAD_BUTTON_B | VPAD_BUTTON_X | VPAD_BUTTON_Y)
 #define SD_HBL_PATH "/vol/external01/wiiu/apps/homebrew_launcher/homebrew_launcher.elf"
 #define SD_MOCHA_PATH "/vol/external01/wiiu/apps/mocha/mocha.elf"
+#define SD_SPIIK_PATH "/vol/external01/wiiu/apps/spiik/spiik.elf"
 
 static const char *verChar = "CBHC v1.6 by FIX94";
 static const unsigned long long VWII_SYSMENU_TID = 0x0000000100000002ULL;
@@ -32,6 +33,7 @@ static const unsigned long long VWII_HBC_TID = 0x000100014C554C5AULL;
 #define DEFAULT_DISABLED 0
 #define DEFAULT_SYSMENU 1
 #define DEFAULT_HBL 2
+#define DEFAULT_SPIIK 2
 #define DEFAULT_MOCHA 3
 #define DEFAULT_CFW_IMG 4
 #define DEFAULT_VWII_SYSMENU 5
@@ -42,6 +44,7 @@ static const char *defOpts[DEFAULT_MAX] = {
 	"DEFAULT_DISABLED",
 	"DEFAULT_SYSMENU",
 	"DEFAULT_HBL",
+	"DEFAULT_SPIIK",
 	"DEFAULT_MOCHA",
 	"DEFAULT_CFW_IMG",
 	"DEFAULT_VWII_SYSMENU",
@@ -52,6 +55,7 @@ static const char *bootOpts[DEFAULT_MAX] = {
 	"Disabled",
 	"System Menu",
 	"Homebrew Launcher",
+	"SPIIK",
 	"Mocha CFW",
 	"fw.img on SD Card",
 	"vWii System Menu",
@@ -459,6 +463,11 @@ do_launch_selection: ;
 	if(launchmode == LAUNCH_HBL)
 	{
 		strcpy((void*)0xF5E70000,SD_HBL_PATH);
+		return 0x01800000;
+	}
+	else if(launchmode == LAUNCH_SPIIK)
+	{
+		strcpy((void*)0xF5E70000,SD_SPIIK_PATH);
 		return 0x01800000;
 	}
 	else if(launchmode == LAUNCH_MOCHA)
